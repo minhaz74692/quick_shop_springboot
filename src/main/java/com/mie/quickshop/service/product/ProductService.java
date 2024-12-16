@@ -3,9 +3,13 @@ package com.mie.quickshop.service.product;
 import com.mie.quickshop.dto.product.ProductDto;
 import com.mie.quickshop.exeption.ProductDeleteFailedException;
 import com.mie.quickshop.exeption.ProductNotFountException;
+import com.mie.quickshop.model.Category;
 import com.mie.quickshop.model.Product;
 import com.mie.quickshop.repository.product.ProductRepository;
+import com.mie.quickshop.request.product.AddProductRequest;
+import com.mie.quickshop.service.category.CategoryService;
 import lombok.RequiredArgsConstructor;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,9 +24,24 @@ public class ProductService implements IProductService{
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private CategoryService categoryService;
+
     @Override
-    public Product addProduct(Product product) {
-        return null;
+    public ProductDto createProduct(AddProductRequest addProductRequest) {
+
+        if(addProductRequest.getName()==null){
+            throw new RuntimeException("You haven't added the name MF!!!!");
+        }
+
+        Product savedProduct = addProductRequest.createProduct();
+        if(addProductRequest.getCategoryId()!=null){
+            Category category = categoryService.getCategoryById(addProductRequest.getCategoryId());
+            savedProduct.setCategory(category);
+        }
+
+
+        return convertToDto(productRepository.save(savedProduct));
     }
 
     @Override

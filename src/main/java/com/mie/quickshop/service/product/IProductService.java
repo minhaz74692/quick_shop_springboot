@@ -2,11 +2,12 @@ package com.mie.quickshop.service.product;
 
 import com.mie.quickshop.dto.product.ProductDto;
 import com.mie.quickshop.model.Product;
+import com.mie.quickshop.request.product.AddProductRequest;
 
 import java.util.List;
 
 public interface IProductService {
-    Product addProduct(Product product);
+    ProductDto createProduct(AddProductRequest addProductRequest);
     Product getProductById(Long id);
     Void updateProduct(Product product, Long productId);
     Void deleteProductById(Long id);
