@@ -55,4 +55,28 @@ public class ProductController {
 
     }
 
+    @PostMapping("/delete/{id}")
+    public ResponseEntity<ApiResponse> deleteProduct(@PathVariable Long id) {
+        try {
+            boolean isDeleted = productService.deleteProductById(id);
+            if (isDeleted) {
+                return ResponseEntity.ok(new ApiResponse(
+                        "product-deleted",
+                        "Product Deleted Successfully"
+                ));
+            } else {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse(
+                        "product-not-found",
+                        null
+                ));
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(
+                    "server-error",
+                    null
+            ));
+        }
+    }
+
+
 }

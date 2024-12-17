@@ -27,6 +27,8 @@ public class ProductService implements IProductService{
     @Autowired
     private CategoryService categoryService;
 
+
+
     @Override
     public ProductDto createProduct(AddProductRequest addProductRequest) {
 
@@ -45,8 +47,8 @@ public class ProductService implements IProductService{
     }
 
     @Override
-    public Product getProductById(Long id) {
-        return productRepository.findById(id).orElseThrow(() ->new ProductNotFountException("Product not found with this id"));
+    public ProductDto getProductById(Long id) {
+        return convertToDto( productRepository.findById(id).orElseThrow(() ->new ProductNotFountException("Product not found with this id")));
     }
 
     @Override
@@ -55,10 +57,16 @@ public class ProductService implements IProductService{
     }
 
     @Override
-    public Void deleteProductById(Long id) {
+    public boolean deleteProductById(Long id) {
 //        productRepository.deleteProduct(id).orElseThrow(()-> new ProductDeleteFailedException("Product delete failed"));
-         productRepository.findById(id).ifPresentOrElse(productRepository ::delete, ()-> {throw new ProductDeleteFailedException("Product delete failed");});
-        return null;
+
+        try {
+            productRepository.findById(id).ifPresentOrElse(productRepository ::delete, ()-> {throw new ProductDeleteFailedException("Product delete failed");});
+            return true;
+        }catch (Exception e){
+
+            return false;
+        }
     }
 
     @Override
