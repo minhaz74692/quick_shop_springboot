@@ -33,9 +33,6 @@ public class ProductService implements IProductService{
     @Override
     public ProductDto createProduct(AddProductRequest addProductRequest) {
 
-        if(addProductRequest.getName()==null){
-            throw new RuntimeException("You haven't added the name MF!!!!");
-        }
 
         Product savedProduct = addProductRequest.createProduct();
         if(addProductRequest.getCategoryId()!=null){
