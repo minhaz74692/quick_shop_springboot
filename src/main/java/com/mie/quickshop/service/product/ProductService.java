@@ -86,16 +86,9 @@ public class ProductService implements IProductService{
     }
 
     @Override
-    public boolean deleteProductById(Long id) {
-//        productRepository.deleteProduct(id).orElseThrow(()-> new ProductDeleteFailedException("Product delete failed"));
-
-        try {
-            productRepository.findById(id).ifPresentOrElse(productRepository ::delete, ()-> {throw new ProductDeleteFailedException("Product delete failed");});
-            return true;
-        }catch (Exception e){
-
-            return false;
-        }
+    public Void deleteProductById(Long id) {
+        productRepository.findById(id).ifPresentOrElse(productRepository ::delete, ()-> {throw new ProductDeleteFailedException("Product delete failed");});
+        return  null;
     }
 
     @Override

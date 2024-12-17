@@ -10,7 +10,7 @@ public interface IProductService {
     ProductDto createProduct(AddProductRequest addProductRequest);
     ProductDto getProductById(Long id);
     Product updateProduct(Long id, AddProductRequest updatedProductRequest);
-    boolean deleteProductById(Long id);
+    Void deleteProductById(Long id);
     List<ProductDto> getAllProducts();
     List<Product> getProductsByCategory(String category);
     List<Product> getProductsByBrand(String brand);

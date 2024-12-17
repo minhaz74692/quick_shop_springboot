@@ -7,6 +7,7 @@ import org.apache.tomcat.websocket.AuthenticationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 //import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -73,11 +74,11 @@ public class GlobalExceptionHandler {
 
 
     // Handle AccessDeniedException (403 for forbidden access)
-//    @ExceptionHandler(org.springframework.security.access.AccessDeniedException.class)
-//    public ResponseEntity<ErrorResponse> handleAccessDeniedException(org.springframework.security.access.AccessDeniedException e) {
-//        return ResponseEntity.status(HttpStatus.FORBIDDEN)
-//                .body(new ErrorResponse(403, "Forbidden", e.getMessage()));
-//    }
+    //    @ExceptionHandler(org.springframework.security.access.AccessDeniedException.class)
+    //    public ResponseEntity<ErrorResponse> handleAccessDeniedException(org.springframework.security.access.AccessDeniedException e) {
+    //        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+    //                .body(new ErrorResponse(403, "Forbidden", e.getMessage()));
+    //    }
 
     // Handle MethodArgumentNotValidException (400 for validation errors)
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -100,16 +101,23 @@ public class GlobalExceptionHandler {
 
 
     // Handle Bad Credentials Exception (401 for bad credentials errors)
-//    @ExceptionHandler(BadCredentialsException.class)
-//    public ResponseEntity<ErrorResponse> handleBadCredentialException(BadCredentialsException e) {
-//        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-//                .body(new ErrorResponse(401, "Bad Credentials", e.getMessage()));
-//    }
+    //    @ExceptionHandler(BadCredentialsException.class)
+    //    public ResponseEntity<ErrorResponse> handleBadCredentialException(BadCredentialsException e) {
+    //        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+    //                .body(new ErrorResponse(401, "Bad Credentials", e.getMessage()));
+    //    }
 
 
     // Handle Resource Not Found (400 for bad credentials errors)
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleResourceNotFoundException(ResourceNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(new ErrorResponse(HttpStatus.NOT_FOUND.value(), "Resource Not Found", e.getMessage()));
+    }
+    //    Handle Resource Not Found (400 for bad credentials errors)
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ErrorResponse> handleCustomNotReadableException(HttpMessageNotReadableException e) {
+
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(new ErrorResponse(HttpStatus.NOT_FOUND.value(), "Resource Not Found", e.getMessage()));
     }
