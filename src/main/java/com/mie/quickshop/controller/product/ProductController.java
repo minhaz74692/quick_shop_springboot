@@ -31,7 +31,7 @@ public class ProductController {
         try {
             return ResponseEntity.ok(new ApiResponse(
                     "all-product",
-                    "all_products"
+                    all_products
             ));
 //            return  ResponseEntity.ok("all_Okay :"+ all_products.toString());
         }catch (Exception e){
@@ -47,7 +47,7 @@ public class ProductController {
             ProductDto product = productService.createProduct(addProductRequest);
             return ResponseEntity.ok(new ApiResponse(
                     "new product",
-                    "product"
+                    product
             ));
         }catch (Exception e){
 

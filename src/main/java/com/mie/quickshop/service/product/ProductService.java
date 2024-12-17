@@ -18,7 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class ProductService implements IProductService{
-
+    @Autowired
     private ModelMapper modelMapper;
 
     @Autowired
