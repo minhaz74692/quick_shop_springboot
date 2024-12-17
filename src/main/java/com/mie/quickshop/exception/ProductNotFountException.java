@@ -1,4 +1,4 @@
-package com.mie.quickshop.exeption;
+package com.mie.quickshop.exception;
 
 public class ProductNotFountException extends  RuntimeException{
     public ProductNotFountException(String message) {

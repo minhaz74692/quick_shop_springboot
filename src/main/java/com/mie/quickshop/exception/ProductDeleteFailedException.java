@@ -1,4 +1,4 @@
-package com.mie.quickshop.exeption;
+package com.mie.quickshop.exception;
 
 public class ProductDeleteFailedException extends RuntimeException {
     public ProductDeleteFailedException(String message) {

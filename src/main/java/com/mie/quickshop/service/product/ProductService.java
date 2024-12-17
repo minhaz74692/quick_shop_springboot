@@ -1,8 +1,9 @@
 package com.mie.quickshop.service.product;
 
 import com.mie.quickshop.dto.product.ProductDto;
-import com.mie.quickshop.exeption.ProductDeleteFailedException;
-import com.mie.quickshop.exeption.ProductNotFountException;
+import com.mie.quickshop.exception.ProductDeleteFailedException;
+import com.mie.quickshop.exception.ProductNotFountException;
+import com.mie.quickshop.exception.global.ResourceNotFoundException;
 import com.mie.quickshop.model.Category;
 import com.mie.quickshop.model.Product;
 import com.mie.quickshop.repository.product.ProductRepository;
@@ -51,9 +52,37 @@ public class ProductService implements IProductService{
         return convertToDto( productRepository.findById(id).orElseThrow(() ->new ProductNotFountException("Product not found with this id")));
     }
 
+//    public Void updateProduct(Product product, Long id) {
+//        return null;
+//    }
     @Override
-    public Void updateProduct(Product product, Long id) {
-        return null;
+    public Product updateProduct(Long id, AddProductRequest updatedProductRequest) {
+        // Find the product by ID
+        Product existingProduct = productRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found with ID: " + id));
+
+        System.out.println("Hello from update product"+ id);
+        System.out.println("Hello from update product"+ updatedProductRequest.getName());
+
+
+        if (updatedProductRequest.getName() != null) {
+            existingProduct.setName(updatedProductRequest.getName());
+        }
+        if (updatedProductRequest.getBrand() != null) {
+            existingProduct.setBrand(updatedProductRequest.getBrand());
+        }
+        if (updatedProductRequest.getPrice() != null) {
+            existingProduct.setPrice(updatedProductRequest.getPrice());
+        }
+        if (updatedProductRequest.getInventory() != 0) {
+            existingProduct.setInventory(updatedProductRequest.getInventory());
+        }
+        if (updatedProductRequest.getDescription() != null) {
+            existingProduct.setDescription(updatedProductRequest.getDescription());
+        }
+
+        return productRepository.save(existingProduct);
+
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.mie.quickshop.exeption;
+package com.mie.quickshop.exception;
 
 public class CategoryNotFoundException extends RuntimeException {
     public CategoryNotFoundException(String message){

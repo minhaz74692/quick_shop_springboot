@@ -1,5 +1,6 @@
 package com.mie.quickshop.request.product;
 import com.mie.quickshop.model.Product;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class AddProductRequest {
     private Long id;
+    @NotBlank(message = "Name can not be empty")
     private String name;
     private String brand;
     private BigDecimal price;

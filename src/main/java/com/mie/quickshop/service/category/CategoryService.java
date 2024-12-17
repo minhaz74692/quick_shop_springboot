@@ -1,13 +1,11 @@
 package com.mie.quickshop.service.category;
 
-import com.mie.quickshop.exeption.CategoryNotFoundException;
+import com.mie.quickshop.exception.CategoryNotFoundException;
 import com.mie.quickshop.model.Category;
 import com.mie.quickshop.repository.category.CategoryRepository;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor

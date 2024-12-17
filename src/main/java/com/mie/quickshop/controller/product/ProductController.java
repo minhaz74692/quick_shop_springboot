@@ -1,11 +1,13 @@
 package com.mie.quickshop.controller.product;
 
 import com.mie.quickshop.dto.product.ProductDto;
+import com.mie.quickshop.exception.global.ResourceNotFoundException;
 import com.mie.quickshop.model.Product;
 import com.mie.quickshop.request.product.AddProductRequest;
 import com.mie.quickshop.response.ApiResponse;
 import com.mie.quickshop.service.product.ProductService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -77,6 +79,51 @@ public class ProductController {
             ));
         }
     }
+
+    @PostMapping("/update/{id}")
+    public ResponseEntity<ApiResponse> updateProduct(
+            @PathVariable Long id,
+
+            @Valid @RequestBody AddProductRequest updateProductRequest){
+        try {
+//            ProductDto product = productService.createProduct(addProductRequest);
+//            return ResponseEntity.ok(new ApiResponse(
+//                    "new product",
+//                    product
+//            ));
+//        }catch (Exception e){
+            try {
+                Product updatedProduct = productService.updateProduct(id, updateProductRequest);
+                return ResponseEntity.ok(new ApiResponse(
+                        "product-updated",
+                        updatedProduct
+                ));
+            } catch (ResourceNotFoundException e) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse(
+                        e.getMessage(),
+                        null
+                ));
+            } catch (IllegalArgumentException e) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ApiResponse(
+                        e.getMessage(),
+                        null
+                ));
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(
+                        "server-error",
+                        null
+                ));
+            }
+
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse(
+                    "server-error",
+                    null
+            ));
+        }
+
+    }
+
 
 
 }
