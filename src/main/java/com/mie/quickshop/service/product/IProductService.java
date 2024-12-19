@@ -10,12 +10,12 @@ public interface IProductService {
     ProductDto createProduct(AddProductRequest addProductRequest);
     ProductDto getProductById(Long id);
     Product updateProduct(Long id, AddProductRequest updatedProductRequest);
-    Void deleteProductById(Long id);
+    void deleteProductById(Long id);
     List<ProductDto> getAllProducts();
     List<Product> getProductsByCategory(String category);
     List<Product> getProductsByBrand(String brand);
     List<Product> findByCategoryNameAndBrand(String category, String brand);
-    List<Product> getProductsByName(String name);
+    List<ProductDto> getProductsByName(String name);
     List<Product> getProductsByBrandAndName(String brand, String name);
     Long countProductsByBrandAndName(String brand, String name);
 }

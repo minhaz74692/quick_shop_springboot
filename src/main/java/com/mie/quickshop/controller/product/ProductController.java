@@ -33,6 +33,24 @@ public class ProductController {
             ));
     }
 
+    @GetMapping("/all-products/{id}")
+    public ResponseEntity<ApiResponse> getProductById(@PathVariable Long id){
+        ProductDto product = productService.getProductById(id);
+            return ResponseEntity.ok(new ApiResponse(
+                    "product by id",
+                    product
+            ));
+    }
+
+    @GetMapping("/products/{name}")
+    public ResponseEntity<ApiResponse> getProductByName(@PathVariable String name){
+        List<ProductDto> products = productService.getProductsByName(name);
+            return ResponseEntity.ok(new ApiResponse(
+                    "product by id",
+                    products
+            ));
+    }
+
     @PostMapping("/create")
     public ResponseEntity<ApiResponse> createProduct( @Valid @RequestBody AddProductRequest addProductRequest){
       ProductDto product = productService.createProduct(addProductRequest);

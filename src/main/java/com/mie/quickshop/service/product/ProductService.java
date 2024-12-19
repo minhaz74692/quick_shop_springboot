@@ -83,9 +83,9 @@ public class ProductService implements IProductService{
     }
 
     @Override
-    public Void deleteProductById(Long id) {
+    public void deleteProductById(Long id) {
         productRepository.findById(id).ifPresentOrElse(productRepository ::delete, ()-> {throw new ProductDeleteFailedException("Product delete failed");});
-        return  null;
+        return;
     }
 
     @Override
@@ -111,8 +111,10 @@ public class ProductService implements IProductService{
     }
 
     @Override
-    public List<Product> getProductsByName(String name) {
-        return List.of();
+    public List<ProductDto> getProductsByName(String name) {
+
+        return productRepository.findAllByName(name).stream().map(this::convertToDto).toList();
+//        return List.of();
     }
 
     @Override
