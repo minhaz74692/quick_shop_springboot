@@ -1,8 +1,7 @@
 package com.mie.quickshop.dto.product;
 
 import com.mie.quickshop.model.Category;
-import com.mie.quickshop.model.Image;
-import jakarta.persistence.*;
+import com.mie.quickshop.model.File;
 import lombok.*;
 
 import java.math.BigDecimal;
@@ -21,5 +20,5 @@ public class ProductDto {
     private int inventory;
     private  String description;
     private Category category;
-    private List<Image> images;
+    private List<File> images;
 }

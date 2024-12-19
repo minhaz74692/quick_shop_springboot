@@ -17,6 +17,10 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+
+    @Column( // This annotation is for handle string length
+            columnDefinition = "TEXT"
+    )
     private String description;
 
     @OneToMany(mappedBy = "category")

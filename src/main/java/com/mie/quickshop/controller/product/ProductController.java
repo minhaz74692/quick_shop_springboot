@@ -33,8 +33,6 @@ public class ProductController {
             ));
     }
 
-
-
     @GetMapping("/all-products/{id}")
     public ResponseEntity<ApiResponse> getProductById(@PathVariable Long id){
         ProductDto product = productService.getProductById(id);

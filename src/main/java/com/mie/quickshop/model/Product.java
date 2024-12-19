@@ -1,7 +1,6 @@
 package com.mie.quickshop.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.mie.quickshop.dto.category.CategoryDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,6 +22,9 @@ public class Product {
     private String brand;
     private BigDecimal price;
     private int inventory;
+    @Column( // This annotation is for handle string length
+            columnDefinition = "TEXT"
+    )
     private  String description;
 
     @ManyToOne(cascade = CascadeType.ALL)
@@ -34,5 +36,5 @@ public class Product {
     // cascade is for: if the parent of the image is deleted from the database then all the child images will be deleted automatically.
     // orphanRemoval is for: If any image's parent is not exist in the database then that image will be removed from database.
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    private  List<Image> images;
+    private  List<File> images;
 }
