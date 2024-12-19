@@ -1,6 +1,7 @@
 package com.mie.quickshop.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.mie.quickshop.dto.category.CategoryDto;
 import jakarta.persistence.*;
 import lombok.*;
 

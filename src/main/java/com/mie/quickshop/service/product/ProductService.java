@@ -93,6 +93,12 @@ public class ProductService implements IProductService{
         return productRepository.findAll().stream().map(this::convertToDto).toList();
     }
 
+
+    public List<Product> getAllProductsNew() {
+        return productRepository.findAll();
+    }
+
+
     @Override
     public List<Product> getProductsByCategory(String category) {
         return productRepository.findByCategoryName(category);

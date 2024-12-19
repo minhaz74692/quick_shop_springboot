@@ -33,6 +33,15 @@ public class ProductController {
             ));
     }
 
+    @GetMapping("/all-products-new")
+    public ResponseEntity<ApiResponse> getAllProductNew(){
+        List<Product> all_products = productService.getAllProductsNew();
+            return ResponseEntity.ok(new ApiResponse(
+                    "all-product",
+                    all_products
+            ));
+    }
+
     @GetMapping("/all-products/{id}")
     public ResponseEntity<ApiResponse> getProductById(@PathVariable Long id){
         ProductDto product = productService.getProductById(id);

@@ -25,7 +25,7 @@ public class CategoryService implements ICategoryService{
 
     @Override
     public Category getCategoryById(Long id) {
-        return categoryRepository.findById(id).orElseThrow(()->new CategoryNotFoundException("Category Not Found for Id"+id));
+        return  categoryRepository.findById(id).orElseThrow(()->new CategoryNotFoundException("Category Not Found for Id"+id));
     }
 
     @Override
