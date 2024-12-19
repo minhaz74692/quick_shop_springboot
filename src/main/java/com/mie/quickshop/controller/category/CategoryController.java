@@ -13,12 +13,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("${api.prefix}/category")
 @RequiredArgsConstructor
 public class CategoryController {
     @Autowired
     CategoryService categoryService;
+
+    @GetMapping("/get-all-category")
+    public ResponseEntity<ApiResponse> getAllCategory(){
+        List<CategoryDto> categoryDtoList = categoryService.getAllCategories();
+        return ResponseEntity.ok(new ApiResponse("All category",categoryDtoList));
+    }
 
     @PostMapping("/create")
     public ResponseEntity<ApiResponse> createProduct(@Valid @RequestBody AddCategoryRequest addCategoryRequest){

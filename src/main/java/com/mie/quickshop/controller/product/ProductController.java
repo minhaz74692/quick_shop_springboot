@@ -33,14 +33,7 @@ public class ProductController {
             ));
     }
 
-    @GetMapping("/all-products-new")
-    public ResponseEntity<ApiResponse> getAllProductNew(){
-        List<Product> all_products = productService.getAllProductsNew();
-            return ResponseEntity.ok(new ApiResponse(
-                    "all-product",
-                    all_products
-            ));
-    }
+
 
     @GetMapping("/all-products/{id}")
     public ResponseEntity<ApiResponse> getProductById(@PathVariable Long id){
@@ -51,8 +44,8 @@ public class ProductController {
             ));
     }
 
-    @GetMapping("/products/{name}")
-    public ResponseEntity<ApiResponse> getProductByName(@PathVariable String name){
+    @GetMapping("/products_by_name")
+    public ResponseEntity<ApiResponse> getProductByName(@RequestParam String name){
         List<ProductDto> products = productService.getProductsByName(name);
             return ResponseEntity.ok(new ApiResponse(
                     "product by id",

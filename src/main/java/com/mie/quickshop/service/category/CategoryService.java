@@ -12,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -31,6 +32,11 @@ public class CategoryService implements ICategoryService{
     @Override
     public Category getCategoryByName(String name) {
         return Optional.ofNullable(categoryRepository.findByName(name)).orElseThrow(()-> new CategoryNotFoundException("category not found"));
+    }
+
+    @Override
+    public List<CategoryDto> getAllCategories() {
+        return  categoryRepository.findAll().stream().map(this:: convertToDto).toList();
     }
 
 //    @Override
