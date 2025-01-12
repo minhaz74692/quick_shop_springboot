@@ -32,15 +32,11 @@ public class ProductService implements IProductService{
 
     @Override
     public ProductDto createProduct(AddProductRequest addProductRequest) {
-
-
         Product savedProduct = addProductRequest.createProduct();
         if(addProductRequest.getCategoryId()!=null){
             Category category = categoryService.getCategoryById(addProductRequest.getCategoryId());
             savedProduct.setCategory(category);
         }
-
-
         return convertToDto(productRepository.save(savedProduct));
     }
 
