@@ -1,9 +1,14 @@
 package com.mie.quickshop.config;
 
+import com.mie.quickshop.service.auth.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -28,25 +33,28 @@ public class SecurityConfiguration {
                         .requestMatchers(api + "/auth/*").permitAll()
 //                        .requestMatchers(api + "/product/**").permitAll() // Add this line
 
-                        .anyRequest().authenticated());
+                        .anyRequest().authenticated())
+                .authenticationProvider(authenticationProvider());
         return  httpSecurity.build();
     }
 
-//    @Bean
-//    public UserDetailsService userDetailsService(){
-//        UserDetails user1 = User.builder()
-//                .username("minhaz")
-//                .password(bCryptPasswordEncoder().encode("12345"))
-//                .roles("ADMIN")
-//                .build();
-//
-//        UserDetails user2 = User.builder()
-//                .username("monir")
-//                .password(bCryptPasswordEncoder().encode("12345"))
-//                .roles("USER")
-//                .build();
-//        return new InMemoryUserDetailsManager(user1, user2);
-//    }
+    @Bean
+    public UserDetailsService userDetailsService(){
+        return new CustomUserDetailsService();
+    }
+
+    @Bean
+    public AuthenticationProvider authenticationProvider(){
+        DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+        daoAuthenticationProvider.setUserDetailsService(userDetailsService());
+        daoAuthenticationProvider.setPasswordEncoder(bCryptPasswordEncoder());
+        return  daoAuthenticationProvider;
+    }
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception{
+        return  authenticationConfiguration.getAuthenticationManager();
+    }
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder(){
