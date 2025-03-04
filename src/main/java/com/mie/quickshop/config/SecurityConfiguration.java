@@ -25,28 +25,28 @@ public class SecurityConfiguration {
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .httpBasic(Customizer.withDefaults())
                 .authorizeHttpRequests(Customizer->Customizer
-                        .requestMatchers(api+ "/security/*").permitAll()
+                        .requestMatchers(api + "/auth/*").permitAll()
 //                        .requestMatchers(api + "/product/**").permitAll() // Add this line
 
                         .anyRequest().authenticated());
         return  httpSecurity.build();
     }
 
-    @Bean
-    public UserDetailsService userDetailsService(){
-        UserDetails user1 = User.builder()
-                .username("minhaz")
-                .password(bCryptPasswordEncoder().encode("12345"))
-                .roles("ADMIN")
-                .build();
-
-        UserDetails user2 = User.builder()
-                .username("monir")
-                .password(bCryptPasswordEncoder().encode("12345"))
-                .roles("USER")
-                .build();
-        return new InMemoryUserDetailsManager(user1, user2);
-    }
+//    @Bean
+//    public UserDetailsService userDetailsService(){
+//        UserDetails user1 = User.builder()
+//                .username("minhaz")
+//                .password(bCryptPasswordEncoder().encode("12345"))
+//                .roles("ADMIN")
+//                .build();
+//
+//        UserDetails user2 = User.builder()
+//                .username("monir")
+//                .password(bCryptPasswordEncoder().encode("12345"))
+//                .roles("USER")
+//                .build();
+//        return new InMemoryUserDetailsManager(user1, user2);
+//    }
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder(){
